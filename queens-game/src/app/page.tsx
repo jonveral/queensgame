@@ -16,17 +16,11 @@ export default function QueensGame() {
   const [history, setHistory] = useState<number[][][]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Palet warna vintage/kertas tua yang pudar namun tetap bisa dibedakan
+  // Palet warna vintage yang lebih harmonis dan elegan
   const regionColors: Record<number, string> = {
-    1: "bg-[#e8dac1]", // Kertas terang
-    2: "bg-[#d6c5a5]", // Khaki pudar
-    3: "bg-[#c2b292]", // Coklat debu
-    4: "bg-[#d8ceb9]", // Beige
-    5: "bg-[#cbbba6]", // Taupe hangat
-    6: "bg-[#b7b09c]", // Sage kering
-    7: "bg-[#d2bcae]", // Terakota pudar
-    8: "bg-[#c4b9ad]", // Abu-abu hangat
-    9: "bg-[#e0d0c1]"  // Peach tua
+    1: "bg-[#e8dac1]", 2: "bg-[#d4c6a9]", 3: "bg-[#c4b597]",
+    4: "bg-[#dcd1be]", 5: "bg-[#cfc1af]", 6: "bg-[#b8b2a1]",
+    7: "bg-[#d6c2b5]", 8: "bg-[#c7bcb1]", 9: "bg-[#e0d2c5]"
   };
 
   const fetchNewLevel = () => {
@@ -95,54 +89,58 @@ export default function QueensGame() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-[#f4ebd0] font-serif text-[#4a332a]">
-        <div className="animate-pulse text-2xl font-bold tracking-widest">
-          Membuka Lembaran Kuno...
+      <div className="flex justify-center items-center h-screen bg-[#ece4d0] font-serif text-[#4a332a]">
+        <div className="animate-pulse text-lg font-medium tracking-widest uppercase">
+          Membuka Gulungan Peta...
         </div>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#ece4d0] font-serif flex flex-col items-center py-10 text-[#3e2723] overflow-x-hidden relative">
+    <main className="min-h-screen bg-gradient-to-b from-[#f2ebe1] to-[#dfd3b8] font-serif flex flex-col items-center py-10 text-[#3e2723] overflow-x-hidden relative">
       
-      {/* Efek Tekstur Kasar (Noise) Opsional menggunakan pseudo-element di Tailwind */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')]"></div>
+      {/* Efek Tekstur Kasar (Noise) - Sangat Halus */}
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')]"></div>
 
-      {/* Header Judul */}
+      {/* Header Judul (Diperkecil dan Lebih Elegan) */}
       <div className="text-center mb-8 z-10">
-        <h1 className="text-5xl md:text-6xl font-black text-[#3b261d] mb-4 tracking-wider drop-shadow-sm uppercase">
-          QueenAnakDewa
-        </h1>
-        <p className="text-sm md:text-base font-medium text-[#6a4f40] max-w-lg px-4 italic leading-relaxed">
-          "Tempatkan satu Ratu di setiap baris, kolom, dan wilayah. Ingatlah, para Ratu tak boleh saling menatap, bahkan dari sudut menyilang."
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <span className="text-[#a69584] text-xl">⚜</span>
+          <h1 className="text-2xl md:text-3xl font-black text-[#3b261d] tracking-[0.2em] uppercase">
+            QueenAnakDewa
+          </h1>
+          <span className="text-[#a69584] text-xl">⚜</span>
+        </div>
+        <p className="text-xs md:text-sm font-medium text-[#6a4f40] max-w-sm px-4 italic leading-relaxed mx-auto">
+          "Tempatkan 1 Ratu di setiap baris, kolom, dan wilayah. Para Ratu dilarang saling menatap, bahkan secara menyilang."
         </p>
       </div>
 
-      {/* Kontrol Atas (Undo & Reset) bergaya Retro Pressed Button */}
-      <div className="flex gap-4 mb-8 z-10">
+      {/* Kontrol Atas (Ramping dan Proporsional) */}
+      <div className="flex gap-3 mb-6 z-10">
         <button 
           onClick={handleUndo} 
           disabled={history.length === 0}
-          className={`flex items-center gap-2 px-5 py-2 border-[3px] border-[#3b261d] font-bold rounded-sm transition-all
+          className={`flex items-center gap-1.5 px-4 py-1.5 border-2 border-[#4a332a] text-sm font-semibold rounded-sm transition-all shadow-sm
             ${history.length === 0 
-              ? "bg-[#d8ceb9] text-[#a09383] opacity-60 cursor-not-allowed" 
-              : "bg-[#e8dac1] text-[#3b261d] shadow-[4px_4px_0px_#3b261d] hover:bg-[#d6c5a5] active:translate-y-1 active:translate-x-1 active:shadow-none"}`}
+              ? "bg-[#dcd1be] text-[#a09383] border-[#a09383] opacity-50 cursor-not-allowed" 
+              : "bg-[#f2ebe1] text-[#4a332a] hover:bg-[#e8dac1] active:scale-95"}`}
         >
-          <span className="text-lg">↶</span> Urungkan
+          <span className="text-base">↶</span> Urungkan
         </button>
         <button 
           onClick={handleReset}
-          className="flex items-center gap-2 px-5 py-2 bg-[#e8dac1] text-[#7a2828] border-[3px] border-[#3b261d] font-bold rounded-sm shadow-[4px_4px_0px_#3b261d] hover:bg-[#d6c5a5] transition-all active:translate-y-1 active:translate-x-1 active:shadow-none"
+          className="flex items-center gap-1.5 px-4 py-1.5 bg-[#f2ebe1] text-[#802a2a] border-2 border-[#4a332a] text-sm font-semibold rounded-sm hover:bg-[#e8dac1] transition-all shadow-sm active:scale-95"
         >
-          <span className="text-lg">↻</span> Bersihkan Papan
+          <span className="text-base">↻</span> Bersihkan
         </button>
       </div>
 
-      {/* Grid Game Container (Berbingkai Kayu Tua/Buku) */}
-      <div className="p-3 md:p-4 bg-[#d5c5ad] rounded-md shadow-[8px_8px_0px_rgba(59,38,29,0.8)] border-[3px] border-[#3b261d] z-10">
+      {/* Grid Game Container (Bingkai Ramping) */}
+      <div className="p-2 md:p-3 bg-[#c7bcb1] rounded shadow-lg border-2 border-[#4a332a] z-10">
         <div 
-          className="grid border-[4px] border-[#2c1c14] bg-[#2c1c14]"
+          className="grid border-[6px] border-[#1a100c] bg-[#1a100c]"
           style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}
         >
           {board.map((row, r) =>
@@ -150,25 +148,25 @@ export default function QueensGame() {
               const regionId = regions[r][c];
               const isError = errors.has(`${r},${c}`);
               
-              const borderTop = r === 0 || regions[r - 1][c] !== regionId ? "border-t-[4px] border-t-[#2c1c14]" : "";
-              const borderBottom = r === size - 1 || regions[r + 1][c] !== regionId ? "border-b-[4px] border-b-[#2c1c14]" : "";
-              const borderLeft = c === 0 || regions[r][c - 1] !== regionId ? "border-l-[4px] border-l-[#2c1c14]" : "";
-              const borderRight = c === size - 1 || regions[r][c + 1] !== regionId ? "border-r-[4px] border-r-[#2c1c14]" : "";
+              // Pembatas region dipertahankan TEBAL (4px)
+              const borderTop = r === 0 || regions[r - 1][c] !== regionId ? "border-t-[4px] border-t-[#1a100c]" : "";
+              const borderBottom = r === size - 1 || regions[r + 1][c] !== regionId ? "border-b-[4px] border-b-[#1a100c]" : "";
+              const borderLeft = c === 0 || regions[r][c - 1] !== regionId ? "border-l-[4px] border-l-[#1a100c]" : "";
+              const borderRight = c === size - 1 || regions[r][c + 1] !== regionId ? "border-r-[4px] border-r-[#1a100c]" : "";
 
               return (
                 <div
                   key={`${r}-${c}`}
                   onClick={() => handleCellClick(r, c)}
                   className={`
-                    w-10 h-10 sm:w-12 sm:h-12 flex justify-center items-center text-xl sm:text-3xl cursor-pointer select-none transition-colors border border-[#a69986]/40
+                    w-9 h-9 sm:w-11 sm:h-11 flex justify-center items-center text-lg sm:text-2xl cursor-pointer select-none transition-colors border border-[#a69986]/30 shadow-inner
                     ${regionColors[regionId]} 
                     ${borderTop} ${borderBottom} ${borderLeft} ${borderRight}
-                    ${isError ? "bg-[#b95e5e] animate-pulse border-[#6b2020] z-10" : "hover:brightness-95"}
+                    ${isError ? "bg-[#c66868] animate-pulse border-[#7a2828] z-10" : "hover:brightness-95"}
                   `}
                 >
-                  {cellValue === 1 && <span className="text-[#8c7b6d] font-bold">✖</span>}
-                  {/* Bidak Ratu dengan warna Tinta Merah Anggur (Burgundy) */}
-                  {cellValue === 2 && <span className="text-[#6b1e1e] drop-shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">♛</span>}
+                  {cellValue === 1 && <span className="text-[#8c7b6d] font-bold opacity-80">✖</span>}
+                  {cellValue === 2 && <span className="text-[#6b1e1e] drop-shadow-sm">♛</span>}
                 </div>
               );
             })
@@ -176,11 +174,11 @@ export default function QueensGame() {
         </div>
       </div>
 
-      {/* Area Pesan Kemenangan */}
-      <div className="h-16 mt-8 flex items-center justify-center z-10">
+      {/* Area Pesan Kemenangan (Lebih Kalem) */}
+      <div className="h-12 mt-6 flex items-center justify-center z-10">
         {isWin && (
-          <div className="animate-bounce px-8 py-3 bg-[#3b261d] text-[#e8dac1] font-bold text-xl rounded-sm shadow-[4px_4px_0px_#1a100c] border-[2px] border-[#1a100c] uppercase tracking-widest">
-            ⚜️ Sabda Dewa Terpenuhi! ⚜️
+          <div className="animate-fade-in-up px-6 py-2 bg-[#4a332a] text-[#f2ebe1] font-semibold text-sm rounded shadow-md border border-[#2c1c14] tracking-wider uppercase">
+            ⚜ Peta Telah Dipecahkan ⚜
           </div>
         )}
       </div>
@@ -188,11 +186,21 @@ export default function QueensGame() {
       {/* Tombol Map Baru */}
       <button 
         onClick={fetchNewLevel}
-        className="mt-2 flex items-center gap-3 px-8 py-4 bg-[#5e3b2e] text-[#f4ebd0] border-[3px] border-[#2c1c14] font-bold text-lg rounded-sm shadow-[6px_6px_0px_#2c1c14] hover:bg-[#4a2e23] transition-all active:translate-y-1 active:translate-x-1 active:shadow-none z-10 uppercase tracking-wide"
+        className="mt-2 flex items-center gap-2 px-6 py-2.5 bg-[#4a332a] text-[#f2ebe1] border-2 border-[#2c1c14] text-sm font-semibold rounded shadow-md hover:bg-[#36241e] transition-all active:scale-95 z-10 uppercase tracking-wide"
       >
-        <span>📜</span> Buka Peta Selanjutnya
+        <span>📜</span> Peta Selanjutnya
       </button>
 
+      {/* Custom Keyframe untuk animasi menang yang halus */}
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 0.5s ease-out forwards;
+        }
+      `}</style>
     </main>
   );
 }
