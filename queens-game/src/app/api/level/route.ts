@@ -88,6 +88,7 @@ function generateRandomMap(size: number): number[][] {
       if (emptyNeighbors.length > 1) {
         frontier.push(current);
       }
+      
       // Masukkan sel yang baru diklaim ke dalam antrean frontier
       frontier.push({ r: n.r, c: n.c, id: current.id });
     }
